@@ -1,0 +1,125 @@
+.comparisons-row {
+  display: flex;
+  gap: 1rem;
+}
+.comparisons-row .comparison {
+  flex: 0 0 calc((100% - 1rem) / 2);
+  max-width: calc((100% - 1rem) / 2);
+}
+
+.comparison {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.comparison__figure {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-size: cover;
+  margin: 0;
+}
+
+.comparison .label {
+  position: absolute;
+  top: 10px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  font-size: 0.8rem;
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 3;
+}
+.comparison .label--left  { left: 10px;  }
+.comparison .label--right { right: 10px; }
+
+
+.comparison .divisor {
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 50%; height: 100%;
+  background-size: cover;
+  box-shadow: 0 5px 10px -2px rgba(0,0,0,0.3);
+}
+.comparison .divisor::before,
+.comparison .divisor::after {
+  content: '';
+  position: absolute;
+  right: -2px;
+  width: 4px;
+  height: calc(50% - 25px);
+  background: white;
+  z-index: 3;
+}
+.comparison .divisor::before { top: 0; box-shadow: 0 -3px 8px 1px rgba(0,0,0,.3); }
+.comparison .divisor::after  { bottom: 0; box-shadow: 0  3px 8px 1px rgba(0,0,0,.3); }
+
+.comparison .handle {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  z-index: 1;
+}
+.comparison .handle::before,
+.comparison .handle::after { 
+  content: '';
+  width: 0;
+  height: 0;
+  border: 6px inset transparent;
+  position: absolute;
+  top: 50%;
+  margin-top: -6px;
+}
+.comparison .handle::before {
+  border-right: 6px solid white;
+  left: 50%;
+  margin-left: -17px;
+}
+.comparison .handle::after {
+  border-left: 6px solid white;
+  right: 50%;
+  margin-right: -17px;
+}
+
+.comparison input.comparison-slider {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: absolute;
+  top: 50%; left: -25px;
+  transform: translateY(-50%);
+  width: calc(100% + 50px);
+  background: transparent;
+  z-index: 2;
+}
+.comparison input.comparison-slider:focus { outline: none; border: none; }
+.comparison input.comparison-slider::-webkit-slider-thumb { 
+  -webkit-appearance: none;
+  border: none;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background: transparent;
+  border: 4px solid #fff;
+  box-shadow: 0 0 8px 1px rgba(0,0,0,.3);
+}
+.comparison input.comparison-slider::-moz-range-track {
+  -moz-appearance:none;
+  height:15px;
+  width: 100%;
+  background-color: transparent; 
+  position: relative;
+  outline: none;     
+}
+
+.section-divider {
+  border: none;
+  border-top: 3px solid #666; 
+  margin: 2rem 0;
+  width: 100%;
+  max-width: 800px;
+}

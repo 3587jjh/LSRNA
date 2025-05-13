@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Generate high-resolution images by leveraging latent-space super-resolution.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Latent Space Super-Resolution for Higher-Resolution Image Generation with Diffusion Models</title>
+
+   <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+   </script>
+   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/slider.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+  
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script src="./static/js/slider.js" defer></script>
+
+</head>   
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">Latent Space Super-Resolution for Higher-Resolution Image Generation with Diffusion Models</h1>
+          <h3 class="subtitle is-3 publication-conference">CVPR 2025</h3>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Jinho Jeong,</span>
+            <span class="author-block">Sangmin Han,</span>
+            <span class="author-block">Jinwoo Kim,</span>
+            <span class="author-block">Seon Joo Kim</span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Yonsei University</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2503.18446"
+                   target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2503.18446"
+                   target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/3587jjh/LSRNA"
+                   target="_blank"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" style="margin-top: 0; padding-top: 2rem;">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <img src="./static/images/teaser1.PNG" alt="Teaser1" style="margin-bottom: 40px;"/>
+        <h2 class="title is-4">Abstract</h2>
+        <div class="content has-text-justified">
+          <p class="is-size-6">
+            In this paper, we propose LSRNA, a novel framework for higher-resolution (exceeding 1K) image generation using diffusion models by leveraging super-resolution directly in the latent space.
+            Existing diffusion models struggle with scaling beyond their training resolutions, often leading to structural distortions or content repetition.
+            Reference-based methods address the issues by upsampling a low-resolution reference to guide higher-resolution generation. 
+            However, they face significant challenges: upsampling in latent space often causes manifold deviation, which degrades output quality. 
+            On the other hand, upsampling in RGB space tends to produce overly smoothed outputs.
+            To overcome these limitations, LSRNA combines Latent space Super-Resolution (LSR) for manifold alignment and Region-wise Noise Addition (RNA) to enhance high-frequency details.
+            Our extensive experiments demonstrate that integrating LSRNA outperforms state-of-the-art reference-based methods across various resolutions and metrics, while showing the critical role of latent space upsampling in preserving detail and sharpness.
+          </p>
+        </div>
+        <img src="./static/images/teaser2.PNG" alt="Teaser2">
+        <div class="content has-text-justified">
+          <p class="is-size-6">
+            <b>Comparison of DemoFusion with different upsampling strategies.</b>
+            (a) Latent space bicubic upsampling causes manifold deviation, degrading output quality. 
+            (b) RGB space bicubic upsampling produces outputs with reduced detail and sharpness. 
+            (c) Our learned latent-space upsampling aligns the manifold, resulting in sharp and detailed outputs. 
+            Best viewed ZOOMED-IN.
+          </p>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+</section>
+
+<section class="section" style="margin-top: 0; padding-top: 2rem;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-4">Framework Comparison</h2>
+          <img src="./static/images/framework_comparison.PNG" alt="Framework_Comparison" />
+          <div class="content has-text-justified">
+          <p class="is-size-6">
+            (a) Existing latent upsampling framework rely on progressive upsampling to address manifold deviation.  
+            (b) Existing RGB upsampling framework can directly upsample (optionally progressively), but produce smooth output.
+            (c) Our framework enables latent upsampling without progressive upscaling with much fewer denoising steps (\( T_c < T \)) 
+            while producing detailed outputs (RNA omitted for simplicity).
+            LR, MR, HR: low/mid/high resolution; DM: Diffusion Model.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" style="margin-top: 0; padding-top: 2rem;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-4">Framework Overview</h2>
+          <img src="./static/images/overview.PNG" alt="Overview" />
+          <div class="content has-text-justified">
+          <p class="is-size-6">
+            The proposed LSRNA enhances reference upsampling with Latent space Super-Resolution (LSR) and Region-wise Noise Addition (RNA). 
+            LSR directly maps the low-resolution reference latent onto the high-resolution manifold. 
+            RNA then injects region-adaptive noise into the mapped reference, guided by a canny edge map.
+            RNA facilitates detail generation in the higher-resolution generation stage.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="section" style="margin-top: 0; padding-top: 2rem;">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-4">Visual examples</h2>
+        <div class="content has-text-justified">
+          <p class="is-size-6">
+            We present visual comparisons of the final outputs as the LSR and RNA modules are incorporated into the baseline (DemoFusion), under our default setting of 30 denoising steps without progressive upsampling.
+            Although our LSRNA framework is designed to be compatible with any reference-based method, we adopt DemoFusion as the baseline, as it is a pioneering reference-based approach.
+          </p>
+        </div>
+
+        <!---------------------------2K----------------------------->
+        <hr class="section-divider">
+        <div class="comparisons-row">
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/2K/19_lsr.jpg')">
+              <div class="label label--left">2048x2048 (Base)</div>
+              <div class="label label--right">2048x2048 (w/ LSR)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/2K/19_base.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/2K/19_lsrna.jpg')">
+              <div class="label label--left">2048x2048 (w/ LSR)</div>
+              <div class="label label--right">2048x2048 (w/ LSRNA)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/2K/19_lsr.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+
+        </div>
+
+        <div class="comparisons-row">
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/2K/9_lsr.jpg')">
+              <div class="label label--left">2048x2048 (Base)</div>
+              <div class="label label--right">2048x2048 (w/ LSR)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/2K/9_base.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/2K/9_lsrna.jpg')">
+              <div class="label label--left">2048x2048 (w/ LSR)</div>
+              <div class="label label--right">2048x2048 (w/ LSRNA)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/2K/9_lsr.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+
+        </div>
+
+        <div class="comparisons-row">
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/2K/78_lsr.jpg')">
+              <div class="label label--left">2048x2048 (Base)</div>
+              <div class="label label--right">2048x2048 (w/ LSR)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/2K/78_base.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/2K/78_lsrna.jpg')">
+              <div class="label label--left">2048x2048 (w/ LSR)</div>
+              <div class="label label--right">2048x2048 (w/ LSRNA)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/2K/78_lsr.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+        </div>
+
+        <!----------------------------3K---------------------------->
+        <hr class="section-divider">
+        <div class="comparisons-row">
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/3K/92_lsr.jpg')">
+              <div class="label label--left">3072x3072 (Base)</div>
+              <div class="label label--right">3072x3072 (w/ LSR)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/3K/92_base.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/3K/92_lsrna.jpg')">
+              <div class="label label--left">3072x3072 (w/ LSR)</div>
+              <div class="label label--right">3072x3072 (w/ LSRNA)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/3K/92_lsr.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+        </div>
+
+        <div class="comparisons-row">
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/3K/16_lsr.jpg')">
+              <div class="label label--left">3072x3072 (Base)</div>
+              <div class="label label--right">3072x3072 (w/ LSR)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/3K/16_base.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/3K/16_lsrna.jpg')">
+              <div class="label label--left">3072x3072 (w/ LSR)</div>
+              <div class="label label--right">3072x3072 (w/ LSRNA)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/3K/16_lsr.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+        </div>
+
+        <div class="comparisons-row">
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/3K/29_lsr.jpg')">
+              <div class="label label--left">3072x3072 (Base)</div>
+              <div class="label label--right">3072x3072 (w/ LSR)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/3K/29_base.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/3K/29_lsrna.jpg')">
+              <div class="label label--left">3072x3072 (w/ LSR)</div>
+              <div class="label label--right">3072x3072 (w/ LSRNA)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/3K/29_lsr.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+        </div>
+
+        <!----------------------------4K---------------------------->
+        <hr class="section-divider">
+        <div class="comparisons-row">
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/4K/58_lsr.jpg')">
+              <div class="label label--left">4096x4096 (Base)</div>
+              <div class="label label--right">4096x4096 (w/ LSR)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/4K/58_base.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/4K/58_lsrna.jpg')">
+              <div class="label label--left">4096x4096 (w/ LSR)</div>
+              <div class="label label--right">4096x4096 (w/ LSRNA)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/4K/58_lsr.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+        </div>
+
+        <div class="comparisons-row">
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/4K/13_lsr.jpg')">
+              <div class="label label--left">4096x4096 (Base)</div>
+              <div class="label label--right">4096x4096 (w/ LSR)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/4K/13_base.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/4K/13_lsrna.jpg')">
+              <div class="label label--left">4096x4096 (w/ LSR)</div>
+              <div class="label label--right">4096x4096 (w/ LSRNA)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/4K/13_lsr.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+        </div>
+
+        <div class="comparisons-row">
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/4K/85_lsr.jpg')">
+              <div class="label label--left">4096x4096 (Base)</div>
+              <div class="label label--right">4096x4096 (w/ LSR)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/4K/85_base.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+
+          <div class="comparison">
+            <figure class="comparison__figure"
+                    style="background-image: url('./static/images/comparison/4K/85_lsrna.jpg')">
+              <div class="label label--left">4096x4096 (w/ LSR)</div>
+              <div class="label label--right">4096x4096 (w/ LSRNA)</div>
+              <div class="handle"></div>
+              <div class="divisor"
+                   style="background-image: url('./static/images/comparison/4K/85_lsr.jpg')"></div>
+            </figure>
+            <input type="range" min="0" max="100" value="50"
+                   class="comparison-slider">
+          </div>
+        </div>
+
+
+            
+
+
+
+
+
+      </div>
+    </div>
+  </div> 
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="section" id="Citation">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Citation</h2>
+    <pre><code>@article{jeong2025latent,
+  title={Latent Space Super-Resolution for Higher-Resolution Image Generation with Diffusion Models},
+  author={Jeong, Jinho and Han, Sangmin and Kim, Jinwoo and Kim, Seon Joo},
+  journal={arXiv preprint arXiv:2503.18446},
+  year={2025}
+}</code></pre>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website template was borrowed from the <a href="https://nerfies.github.io/">Nerfies</a> project.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
