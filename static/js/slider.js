@@ -6,10 +6,12 @@ window.addEventListener('DOMContentLoaded', function() {
 
     function move() {
       var pct = slider.value + '%';
-      handle.style.left   = pct;
-      divisor.style.width = pct;
+      handle.style.left = pct;
+      var inv = 100 - slider.value;
+      divisor.style.clipPath = 'inset(0 ' + inv + '% 0 0)';
+      divisor.style.webkitClipPath = 'inset(0 ' + inv + '% 0 0)';
+      container.style.setProperty('--pct', pct);
     }
-
     slider.addEventListener('input', move);
     move();
   });

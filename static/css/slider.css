@@ -11,6 +11,18 @@
   position: relative;
   aspect-ratio: 1 / 1;
   overflow: hidden;
+  --pct: 50%;
+}
+.comparison::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  left: var(--pct);
+  transform: translateX(-50%);
+  width: 4px;
+  background: white;
+  z-index: 3;
+  pointer-events: none;
 }
 
 .comparison__figure {
@@ -31,6 +43,12 @@
   border-radius: 4px;
   pointer-events: none;
   z-index: 3;
+
+  box-sizing: border-box;
+  white-space: nowrap;  
+  overflow: hidden;  
+  text-overflow: ellipsis;  
+  max-width: calc(50% - 20px);
 }
 .comparison .label--left  { left: 10px;  }
 .comparison .label--right { right: 10px; }
@@ -38,52 +56,44 @@
 
 .comparison .divisor {
   position: absolute;
-  bottom: 0; left: 0;
-  width: 50%; height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background-size: cover;
+  background-position: center;
   box-shadow: 0 5px 10px -2px rgba(0,0,0,0.3);
+  will-change: clip-path;
+  clip-path: inset(0 50% 0 0);
 }
-.comparison .divisor::before,
-.comparison .divisor::after {
-  content: '';
-  position: absolute;
-  right: -2px;
-  width: 4px;
-  height: calc(50% - 25px);
-  background: white;
-  z-index: 3;
-}
-.comparison .divisor::before { top: 0; box-shadow: 0 -3px 8px 1px rgba(0,0,0,.3); }
-.comparison .divisor::after  { bottom: 0; box-shadow: 0  3px 8px 1px rgba(0,0,0,.3); }
+
 
 .comparison .handle {
   position: absolute;
-  height: 50px;
-  width: 50px;
   top: 50%;
   left: 50%;
-  transform: translateY(-50%) translateX(-50%);
-  z-index: 1;
+  transform: translate(-50%, -50%);
+  height: 50px;
+  width: 50px;
+  z-index: 2;
+  pointer-events: none;
 }
 .comparison .handle::before,
 .comparison .handle::after { 
   content: '';
-  width: 0;
-  height: 0;
-  border: 6px inset transparent;
   position: absolute;
   top: 50%;
-  margin-top: -6px;
+  left: 38%;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  transform: translateY(-50%);
 }
 .comparison .handle::before {
-  border-right: 6px solid white;
-  left: 50%;
-  margin-left: -17px;
+  border-right-color: white;  
+  transform: translateX(-12px) translateY(-50%);
 }
 .comparison .handle::after {
-  border-left: 6px solid white;
-  right: 50%;
-  margin-right: -17px;
+  border-left-color: white;
+  transform: translateX(12px) translateY(-50%);
 }
 
 .comparison input.comparison-slider {
