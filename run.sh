@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 CUDA_VISIBLE_DEVICES=0 python main.py \
     --prompt "A well-worn baseball glove and ball sitting on fresh-cut grass." \
     --negative_prompt "blurry, ugly, duplicate, poorly drawn, deformed, mosaic" \
