@@ -4,7 +4,7 @@
 
 Official code for "Latent Space Super-Resolution for Higher-Resolution Image Generation with Diffusion Models".
 
-<img src="figures/teaser.png" alt="Teaser" width="100%" />
+<img src="figures/teaser.jpg" alt="Teaser" width="80%" />
 
 <div align="justify">
 <b>Abstract</b>: In this paper, we propose LSRNA, a novel framework for higher-resolution (exceeding 1K) image generation using diffusion models by leveraging super-resolution directly in the latent space. Existing diffusion models struggle with scaling beyond their training resolutions, often leading to structural distortions or content repetition. Reference-based methods address the issues by upsampling a low-resolution reference to guide higher-resolution generation. However, they face significant challenges: upsampling in latent space often causes manifold deviation, which degrades output quality. On the other hand, upsampling in RGB space tends to produce overly smoothed outputs. To overcome these limitations, LSRNA combines Latent space Super-Resolution (LSR) for manifold alignment and Region-wise Noise Addition (RNA) to enhance high-frequency details. Our extensive experiments demonstrate that integrating LSRNA outperforms state-of-the-art reference-based methods across various resolutions and metrics, while showing the critical role of latent space upsampling in preserving detail and sharpness.
@@ -39,5 +39,19 @@ Feel free to adjust the RNA hyperparameters (e.g., --rna_max_std) to adjust the 
 We also provide a `run.sh` script for the generation.
 
 ## Visual Comparison
-<img src="figures/comparison.png" alt="Comparison" width="100%" />
+<img src="figures/comparison.jpg" alt="Comparison" width="80%" />
+
 Additional results can be found on the [project page](https://3587jjh.github.io/LSRNA/).
+
+## Citation
+```
+@article{jeong2025latent,
+  title={Latent Space Super-Resolution for Higher-Resolution Image Generation with Diffusion Models},
+  author={Jeong, Jinho and Han, Sangmin and Kim, Jinwoo and Kim, Seon Joo},
+  journal={arXiv preprint arXiv:2503.18446},
+  year={2025}
+}
+```
+
+## Acknowledgement
+This repo is based on [DemoFusion](https://github.com/PRIS-CV/DemoFusion) and [LIIF](https://github.com/yinboc/liif). 
