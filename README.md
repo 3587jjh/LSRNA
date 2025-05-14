@@ -36,6 +36,7 @@ CUDA_VISIBLE_DEVICES=0 python main.py \
     #--low_vram
 ```
 Feel free to adjust the RNA hyperparameters (e.g., --rna_max_std) to adjust the level of detail in the generated images. 
+If you’re running out of VRAM, enable the low-VRAM mode with `--low_vram`.
 We also provide a `run.sh` script for the generation.
 
 ## Visual Comparison
