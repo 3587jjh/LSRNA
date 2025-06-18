@@ -46,10 +46,11 @@ Additional results can be found on the [project page](https://3587jjh.github.io/
 
 ## Citation
 ```
-@article{jeong2025latent,
-  title={Latent Space Super-Resolution for Higher-Resolution Image Generation with Diffusion Models},
+@inproceedings{jeong2025latent,
+  title={Latent space super-resolution for higher-resolution image generation with diffusion models},
   author={Jeong, Jinho and Han, Sangmin and Kim, Jinwoo and Kim, Seon Joo},
-  journal={arXiv preprint arXiv:2503.18446},
+  booktitle={Proceedings of the Computer Vision and Pattern Recognition Conference},
+  pages={2355--2365},
   year={2025}
 }
 ```
