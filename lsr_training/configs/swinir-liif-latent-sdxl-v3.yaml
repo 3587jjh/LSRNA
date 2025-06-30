@@ -1,0 +1,58 @@
+# use datasets/scripts/make_trainset.py
+train_dataset:
+  dataset:
+    name: image-folder
+    args:
+      hr_path: ../datasets/train/OpenImages/HR_sdxl_latent # shared
+      lr_path: ../datasets/train/OpenImages/LR_sdxl_latent
+      scales: [2,3,4]
+  wrapper:
+    name: sr-explicit-paired
+    args:
+      inp_size: 32 # lr
+      augment: []
+      sample_size: 64 # hr | should be less than min(scales)*inp_size
+  num_workers: 4 # total
+  batch_size: 32 # total
+
+valid_path: ../datasets/test/SDXL/original
+sd_ckpt: stabilityai/stable-diffusion-xl-base-1.0 # fixed
+
+model:
+  name: liif
+  args:
+    feat_unfold: true
+    local_ensemble: true
+    encoder_spec:
+      name: swinir
+      args:
+        img_size: 32 # inp_size
+        in_chans: 4
+        embed_dim: 60
+        depths: [6,6,6,6]
+        num_heads: [6,6,6,6]
+        window_size: 8
+        upsampler: none
+    imnet_spec:
+      name: mlp
+      args:
+        out_dim: 4
+        hidden_list: [256,256,256,256]
+
+optimizer:
+  name: adam
+  args:
+    lr: 2.e-4
+
+lr_scheduler:
+  name: CosineAnnealingLR_Restart
+  args:
+    T_period: [1000000]
+    restarts: [1000000]
+    weights: [1]
+    eta_min: 1.e-7
+
+iter_max: 1000000
+iter_print: 2000
+iter_val: 50000
+iter_save: 200000
